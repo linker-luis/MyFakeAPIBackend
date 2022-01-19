@@ -99,7 +99,7 @@ WSGI_APPLICATION = 'myfakeapi.wsgi.application'
 # }
 
 
-# postgresql connector
+# postgresql connector sql
 DATABASES = {
    'default': {
        'ENGINE': 'django.db.backends.postgresql',
