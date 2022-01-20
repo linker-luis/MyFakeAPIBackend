@@ -14,7 +14,7 @@ from pathlib import Path
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 
 # Quick-start development settings - unsuitable for production
@@ -23,10 +23,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-$sisc*d-u(pq^pl++7f5ki+lsm%_2a34l23u&ru@zb=%hv9_&b'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = ['myfakeapibackend.herokuapp.com']
 
 
 # Application definition
@@ -88,28 +84,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'myfakeapi.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
-
-# postgresql connector sql
-DATABASES = {
-   'default': {
-       'ENGINE': 'django.db.backends.postgresql',
-       'NAME': 'dfshatck2f1vhc',
-       'USER': 'borbziwezgorqo',
-       'PASSWORD': '57a36d4a0bfc90b4dd498489e847cba336da499e77d68f37fd889489c97e9b5e',
-       'HOST': 'ec2-3-222-24-200.compute-1.amazonaws.com',
-       'PORT': '5432',
-   }
-}
 
 
 # Password validation

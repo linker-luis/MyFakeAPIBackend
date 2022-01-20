@@ -20,7 +20,7 @@ class ImagesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Images
         fields = [
-            # 'img', 
+            # 'img', #--------------
             'imgURL'
             ]
 
