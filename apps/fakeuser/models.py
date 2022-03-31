@@ -1,3 +1,5 @@
+from operator import truediv
+from pyexpat import model
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -6,7 +8,7 @@ import uuid
 
 class FakeUser(models.Model):
     username = models.CharField(max_length= 40, null= False, blank= False)
-    email = models.EmailField(max_length= 50, null= False, blank= True)
+    email = models.EmailField(max_length= 100, null= False, blank= True)
     password = models.CharField(max_length= 8, default= uuid.uuid4().hex[:8])
 
     def __str__(self):
@@ -14,18 +16,25 @@ class FakeUser(models.Model):
 
 class PersonalInformation(models.Model):
     user = models.OneToOneField(FakeUser, on_delete= models.CASCADE, related_name= 'personal_information')
-    name = models.CharField(max_length= 20)
-    lastname = models.CharField(max_length= 20)
-    phone = models.CharField(max_length=9)
+    first_name = models.CharField(max_length= 50, null= False, blank= True)
+    last_name = models.CharField(max_length= 50, null= False, blank= True)
+    img = models.CharField(max_length= 255, blank= True, null = True)
+    phone = models.CharField(max_length=20, null= False, blank= True)
+    email = models.EmailField(max_length= 100, null= False, blank= True)
+    gender = models.CharField(max_length= 10, null= False, blank= True)
+    gender_abbrev = models.CharField(max_length= 1, null= False, blank= True)
+    job_title = models.CharField(max_length= 50, null= False, blank= True)
 
     def __str__(self):
-        return f'{self.name} {self.lastname}'
+        return f'{self.first_name} {self.last_name}'
 
-class Address(models.Model):
-    user = models.OneToOneField(FakeUser, on_delete= models.CASCADE, related_name= 'address')
-    city = models.CharField(max_length= 30)
-    street = models.CharField(max_length=50)
-    zip_code = models.CharField(max_length= 10)
+class Location(models.Model):
+    personal_inf = models.OneToOneField(PersonalInformation, on_delete= models.CASCADE, related_name= 'location')
+    country = models.CharField(max_length= 20, null= False, blank= True)
+    city = models.CharField(max_length= 30, null= False, blank= True)
+    street = models.CharField(max_length=50, null= False, blank= True)
+    street_number = models.CharField(max_length= 15, null= False, blank= True)
+    zip_code = models.CharField(max_length= 5, null= False, blank= True)
 
     def __str__(self):
         return f'{self.city} {self.street}'

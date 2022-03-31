@@ -1,14 +1,27 @@
 # from django.shortcuts import render
+from cgitb import lookup
 from rest_framework import generics, serializers
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from rest_framework.views import APIView
+from rest_framework.mixins import ListModelMixin, CreateModelMixin
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
-from .serializers import FakeUserSerializer, FakeUserDetailSerializer, FakeUserLoginSerializer
+from .serializers import (
+    FakeUserSerializer, 
+    FakeUserDetailSerializer, 
+    FakeUserLoginSerializer,
+    SimplePersonalInformationSerializer,
+    PersonalInformationSerializer
+    # CreateFakeUserListSerializer
+)
 from .models import (
     FakeUser,
-    Address,
+    Location,
     PersonalInformation,
     FakeToken,
+    
 )
 
 class FakeUserListAPIView(generics.ListAPIView):
@@ -32,8 +45,10 @@ def fakeLoginAPIView(request):
         try:
             fake_user = FakeUser.objects.get(username = username, password = password)
             token = fake_user.token.key
+            first_name = fake_user.personal_information.first_name
+            img = fake_user.personal_information.img
 
-            return Response({'key': token}, status = status.HTTP_200_OK)
+            return Response({'key': token, 'username': fake_user.username, 'first_name': first_name, 'img': img}, status = status.HTTP_200_OK)
         
         except:
 
@@ -55,3 +70,23 @@ def fake_logout(request):
     # print(request.META)
     # print(request.META['HTTP_AUTORIZATION'])
     return Response({'message': 'Success Logout'}, status= status.HTTP_200_OK)
+
+
+# personal information
+
+class PersonListApiView(generics.ListAPIView):
+    serializer_class = SimplePersonalInformationSerializer
+    queryset = PersonalInformation.objects.all()
+
+class PersonDetailApiView(generics.RetrieveAPIView):
+    serializer_class = PersonalInformationSerializer
+    queryset = PersonalInformation.objects.all()
+    lookup_field = 'id'
+
+# only for admin
+
+# class CreateFakeUserListView(APIView, ListModelMixin, CreateModelMixin):
+#     serializer_class = CreateFakeUserListSerializer
+#     queryset = FakeUser.objects.all()
+#     authentication_classes = [SessionAuthentication, BasicAuthentication]
+#     permission_classes = [IsAuthenticated]

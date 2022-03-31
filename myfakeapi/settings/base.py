@@ -46,7 +46,8 @@ THIRD_APPS = [
     'rest_framework',
     'django_filters',
     'corsheaders',
-    'ckeditor'
+    'ckeditor',
+    'nested_admin'
 ]
 
 INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS + THIRD_APPS
