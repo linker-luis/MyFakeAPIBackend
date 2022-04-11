@@ -47,7 +47,14 @@ def fakeLoginAPIView(request):
             first_name = fake_user.personal_information.first_name
             img = fake_user.personal_information.img
 
-            return Response({'key': token, 'username': fake_user.username, 'first_name': first_name, 'img': img}, status = status.HTTP_200_OK)
+            return Response({
+                'key': token, 
+                'person_data': {
+                    'id': fake_user.id, 
+                    'username': fake_user.username, 
+                    'first_name': first_name, 
+                    'img': img}
+                }, status = status.HTTP_200_OK)
         
         except:
 

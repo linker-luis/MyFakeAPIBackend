@@ -24,6 +24,7 @@ class SimplePersonalInformationSerializer(serializers.ModelSerializer):
     class Meta:
         model = PersonalInformation
         fields = [
+            'id',
             'first_name',
             'last_name',
             'img',
