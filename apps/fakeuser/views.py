@@ -50,7 +50,7 @@ def fakeLoginAPIView(request):
             return Response({
                 'key': token, 
                 'person_data': {
-                    'id': fake_user.id, 
+                    'id': fake_user.personal_information.id, 
                     'username': fake_user.username, 
                     'first_name': first_name, 
                     'img': img}
